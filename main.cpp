@@ -106,25 +106,25 @@ void ztype(float **Matrix, int rows, int columns) {
             for (int j = 0; j < columns; j++)
                 fullSum += Matrix[i][j];
         }
-
-        for (int i = 0; i < rows; i++) {
+        for (int i = 0; i < rows; i++)
             diagSum += Matrix[i][i];
-        }
 
         if (fullSum - diagSum <= 0){
             cout << "Матрица Z-образная" << endl;
 
             for (int i = 0; i < rows; i++) {
                 total = 0;
-                for (int j = 0; j < columns; j++) {
+                for (int j = 0; j < columns; j++)
                     total += Matrix[i][j];
-                }
+
                 cout << "сумма строки " << i+1 << ": " << total << endl;
             }
         }
-        else cout << "Матрица не Z-образная" << endl;
+        else
+            cout << "Матрица не Z-образная" << endl;
     }
-
+    else
+        cout << "Матрица не Z-образная" << endl;
     //cout << "Sum diag: " << diagSum << endl; //   CHECK for correct diagSum calculation
     //cout << "Full sum: " << fullSum << endl; //     CHECK for correct fullSum calculation
 }
@@ -134,6 +134,7 @@ void delmatrix(float **Matrix, int rows) {
     for (int i = 0; i < rows; i++)
         delete [] Matrix[i];
     delete [] Matrix;
+    system("pause");
 }
 
 float checkinput (string limit) {
@@ -188,7 +189,8 @@ float checkinput (string limit) {
             (atof(input.c_str()) < 9223372036854775807.0))) || (count_zero == 1) && (count_dot == 1) &&
             (((int(count + 1) == (int) input.length()) && (atof(input.c_str()) > -9223372036854775808.0) &&
             (atof(input.c_str()) < 9223372036854775807.0))) || (count_zero == 1) && (count_minus == 1) && (count_dot == 1) &&
-            (((int(count + 2) == (int) input.length()) ))) {
+            (((int(count + 2) == (int) input.length()) )) || (count_zero == 1) && (count_minus == 0) && (count_dot == 0) &&
+            (int(count) == 0)) {
                 correct = true;
             } else if (flag) {
                 correct = false;
