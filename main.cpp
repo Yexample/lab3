@@ -57,7 +57,14 @@ int main()
 
     delmatrix(Matrix, rows);
 
-    system("pause");
+    char rerun;
+    cout << "Запустить программу снова? (Y = да) "; // Запрос на повторный запуск
+    cin >> rerun;
+    if (rerun == 'y' or rerun == 'Y')
+        main();
+    else
+        system("pause");
+
     return 0;
 }
 
@@ -77,8 +84,11 @@ void rand_gen(float **Matrix, int rows, int columns)
     mt19937 eng(rd());
     uniform_real_distribution<float> distr(min, max);
 
+    cout << endl;
+
     for (int i = 0; i < rows; i++)
     {
+        Matrix[i] = new float[columns];
         for (int j = 0; j < columns; j++) {
 
             Matrix[i][j] = distr((eng));
@@ -110,7 +120,7 @@ void ztype(float **Matrix, int rows, int columns) {
             diagSum += Matrix[i][i];
 
         if (fullSum - diagSum <= 0){
-            cout << "Матрица Z-образная" << endl;
+            cout << "\nМатрица Z-образная" << endl;
 
             for (int i = 0; i < rows; i++) {
                 total = 0;
@@ -121,12 +131,10 @@ void ztype(float **Matrix, int rows, int columns) {
             }
         }
         else
-            cout << "Матрица не Z-образная" << endl;
+            cout << "\nМатрица не Z-образная" << endl;
     }
     else
-        cout << "Матрица не Z-образная" << endl;
-    //cout << "Sum diag: " << diagSum << endl; //   CHECK for correct diagSum calculation
-    //cout << "Full sum: " << fullSum << endl; //     CHECK for correct fullSum calculation
+        cout << "\nМатрица не Z-образная" << endl;
 }
 
 
@@ -134,7 +142,6 @@ void delmatrix(float **Matrix, int rows) {
     for (int i = 0; i < rows; i++)
         delete [] Matrix[i];
     delete [] Matrix;
-    system("pause");
 }
 
 float checkinput (string limit) {
@@ -217,7 +224,7 @@ int checkint (string dimensions) {
             if (str[i] == DOT) {
                 flag_dot = true;
             }
-            if (((!isdigit(str[i])) || (flag_dot))) {
+            if ((!isdigit(str[i])) || (flag_dot)) {
                 cout << "Ошибка, введите целое число" << endl;
                 cin.ignore(10000, '\n');
                 flag = true;
@@ -241,12 +248,15 @@ int checkint (string dimensions) {
 
 void manualPopulation(float **Matrix, int rows, int columns)
 {
-    for (int i = 0; i < rows; i++)
+    for (int i = 0; i < rows; i++) {
+        Matrix[i] = new float[columns];
         for (int j = 0; j < columns; j++) {
             cout << '[' << int(i + 1) << ']' << '[' << int(j + 1) << "] ";
             string limit = "";
             Matrix[i][j] = checkinput(limit);
         }
+    }
+    cout << endl;
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < columns; j++)
@@ -254,4 +264,5 @@ void manualPopulation(float **Matrix, int rows, int columns)
 
         cout << endl;
     }
+    cout << endl;
 }
