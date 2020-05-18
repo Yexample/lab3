@@ -2,8 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <windows.h>
-#include <iomanip>   // std::setprecision
-#include <cctype>   // для функции isdigit
+#include <iomanip>   
+#include <cctype>   
 #include <random>
 
 #define DOT '.'
