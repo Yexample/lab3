@@ -27,7 +27,7 @@ int main()
 
     string dimensions = "Количество рядов: ";
     int rows = checkint(dimensions);
-    dimensions = "Количество колоно: ";
+    dimensions = "Количество колонок: ";
     int columns = checkint(dimensions);
 
     float **Matrix = new float*[rows];
