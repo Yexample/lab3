@@ -2,12 +2,13 @@
 #include <cstdlib>
 #include <ctime>
 #include <windows.h>
-#include <iomanip>   
-#include <cctype>  
+#include <iomanip>   // std::setprecision
+#include <cctype>   // для функции isdigit
 #include <random>
 
 #define DOT '.'
 #define MINUS '-'
+#define ZERO '0'
 
 using namespace std;
 
@@ -129,62 +130,75 @@ void ztype(float **Matrix, int rows, int columns) {
 }
 
 
-void delmatrix(float **Matrix, int rows)
-{
+void delmatrix(float **Matrix, int rows) {
     for (int i = 0; i < rows; i++)
         delete [] Matrix[i];
     delete [] Matrix;
 }
 
 float checkinput (string limit) {
-    string minstr;
+
+    string input;
     int count = 0;
     int count_dot = 0;
     int count_minus = 0;
+    int count_zero = 0;
     bool flag = true;
     bool flag_dot = false;
     bool flag_minus = false;
+    bool flag_zero = false;
     bool correct = false;
 
     do {
         cout << limit;
-        cin >> minstr;
-        for (int i = 0; i < (int) minstr.length(); i++) {
-            if (minstr[i] == DOT) {
+        cin >> input;
+        for (int i = 0; i < (int) input.length(); i++) {
+            if (input[i] == DOT) {
                 count_dot++;
                 flag_dot = true;
             }
-            if (minstr[i] == MINUS) {
+            if (input[i] == MINUS) {
                 flag_minus = true;
                 count_minus++;
             }
-            if (((!isdigit(minstr[i])) && (!flag_dot) && (!flag_minus)) || (count_dot >= 2)) {
-                cout << "Введено не число, попробуйте еще раз" << endl;
-                cin.ignore(10000, '\n');
-                flag = true;
-                break;
+            if (input[i] == ZERO) {
+                flag_zero = true;
+                count_zero++;
             }
-            else
-                count++;
-        }
-        if ((((count == (int) minstr.length()) && (atof(minstr.c_str()) > -9223372036854775808.0) &&
-              (atoi(minstr.c_str()) < 9223372036854775807.0))) || (count_minus == 1) &&
-                                                                  (((int(count + 1) == (int) minstr.length()) && (atof(minstr.c_str()) > -9223372036854775808.0) &&
-                                                                    (atoi(minstr.c_str()) < 9223372036854775807.0))))
-
-        {
-            correct = true;
-        }
-        else if (flag) {
-            correct = false;
-        }
-    } while (correct == false);
-
-    float min = stof(minstr);
-
+                if (((!isdigit(input[i])) && (!flag_dot) && (!flag_minus) && (!flag_zero)) || (count_dot >= 2)) {
+                    cout << "Введено не число, попробуйте еще раз" << endl;
+                    cin.ignore(10000, '\n');
+                    flag = true;
+                    count = 0;
+                    count_dot = 0;
+                    count_minus = 0;
+                    break;
+                } else
+                    count++;
+            }
+            if (((((count == (int) input.length()) && (atof(input.c_str()) > -9223372036854775808.0) &&
+            (atof(input.c_str()) < 9223372036854775807.0))) || (count_minus == 1) &&
+            (((int(count + 1) == (int) input.length()) && (atof(input.c_str()) > -9223372036854775808.0) &&
+            (atof(input.c_str()) < 9223372036854775807.0))) || (count_zero == 1) &&
+            (((int(count) == (int) input.length()) && (atof(input.c_str()) > -9223372036854775808.0) &&
+            (atof(input.c_str()) < 9223372036854775807.0))) || (count_dot == 1) &&
+            (((int(count + 1) == (int) input.length()) && (atof(input.c_str()) > -9223372036854775808.0) &&
+            (atof(input.c_str()) < 9223372036854775807.0)))) || (count_minus == 1) &&
+            (((int(count + 1) == (int) input.length()) && (atof(input.c_str()) > -9223372036854775808.0) &&
+            (atof(input.c_str()) < 9223372036854775807.0))) || (count_zero == 1) && (count_dot == 1) &&
+            (((int(count + 1) == (int) input.length()) && (atof(input.c_str()) > -9223372036854775808.0) &&
+            (atof(input.c_str()) < 9223372036854775807.0))) || (count_zero == 1) && (count_minus == 1) && (count_dot == 1) &&
+            (((int(count + 2) == (int) input.length()) ))) {
+                correct = true;
+            } else if (flag) {
+                correct = false;
+            }
+        } while (correct == false);
+    float min = stof(input);
     return min;
+    }
 
-}
+
 
 int checkint (string dimensions) {
 
